@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANVISNING Manual Template</title>
+<!-- IKEA-STYLE MANUAL TEMPLATE
+     Copy this file, keep <style> and <defs>, replace the <section class="page"> blocks.
+     Every component the skill uses appears at least once below. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111;
+    --paper:#fff;
+    --desk:#e9e7e2;
+    --muted:#666;
+    --line:#111;
+    --soft:#f3f2ee;
+    --accent:#ffdb00;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--desk);
+    color:var(--ink);
+    font-family:Verdana,"Noto Sans TC",system-ui,sans-serif;
+    line-height:1.55;
+    padding:24px 16px 80px;
+  }
+  .page{
+    position:relative;
+    max-width:820px;
+    margin:0 auto 28px;
+    background:var(--paper);
+    padding:48px 48px 64px;
+    box-shadow:0 1px 0 rgba(0,0,0,.08),0 10px 30px rgba(0,0,0,.08);
+    overflow:hidden;
+  }
+  .pno{position:absolute;right:28px;bottom:20px;font-weight:700;font-size:15px}
+  .code{position:absolute;left:28px;bottom:20px;font-size:11px;color:var(--muted);letter-spacing:.08em}
+  h1,h2,h3{margin:0;font-weight:900;letter-spacing:.01em}
+  h2{font-size:22px;margin-bottom:6px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 28px}
+  p{margin:0}
+  code,.mono{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.92em}
+  .k{background:var(--soft);padding:1px 6px;border-radius:3px}
+  svg{display:block;max-width:100%;height:auto}
+  .stroke{fill:none;stroke:var(--line);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+  /* cover */
+  .cover{padding:56px 48px 72px;min-height:min(860px,120vw);display:flex;flex-direction:column}
+  .cover .name{font-size:clamp(44px,10vw,92px);font-weight:900;letter-spacing:-.02em;line-height:1}
+  .cover .desc{font-size:16px;margin-top:10px;font-weight:500}
+  .cover .art{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 0}
+  .cover .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:2.4px solid var(--ink);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px}
+  .logo{background:var(--ink);color:#fff;font-weight:900;padding:6px 12px;letter-spacing:.06em;font-size:18px;border-radius:3px}
+
+  /* steps */
+  .step{display:grid;grid-template-columns:84px 1fr;gap:18px;align-items:start;padding:28px 0;border-top:1px dashed #bbb}
+  .step:first-of-type{border-top:0;padding-top:4px}
+  .num{font-size:64px;font-weight:900;line-height:.9}
+  .step h3{font-size:18px;margin-bottom:6px}
+  .step p{font-size:14.5px}
+  .frame{border:2.4px solid var(--ink);border-radius:4px;padding:16px;margin-top:14px;position:relative;background:#fff}
+  .cap{font-size:13px;color:var(--muted);margin-top:8px}
+
+  /* ok / no marks */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .quad{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .mark{position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;background:#fff;border:2.4px solid var(--ink);display:grid;place-items:center;font-weight:900;font-size:20px;line-height:1}
+  .panel{border:2.4px solid var(--ink);border-radius:4px;padding:18px 16px 16px;position:relative;background:#fff}
+  .panel h4{margin:10px 0 4px;font-size:15px}
+  .panel p{font-size:13.5px;color:#333}
+  .panel.no{background:repeating-linear-gradient(135deg,#fff 0 10px,#fafafa 10px 20px)}
+
+  /* parts */
+  .parts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .part{border:1.5px solid #ccc;border-radius:4px;padding:14px 10px 12px;text-align:center;position:relative}
+  .part .qty{position:absolute;left:10px;top:8px;font-weight:900;font-size:15px}
+  .part .lbl{font-weight:700;font-size:13.5px;margin-top:8px}
+  .part .fn{font-size:12px;color:var(--muted)}
+  .part.x{opacity:.55}
+  .part.x::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(to top right,transparent calc(50% - 1.5px),#111 calc(50% - 1.5px),#111 calc(50% + 1.5px),transparent calc(50% + 1.5px))}
+
+  /* letters */
+  .tag{display:inline-grid;place-items:center;min-width:26px;height:26px;border:2.4px solid var(--ink);border-radius:50%;font-weight:900;font-size:13px;margin-right:8px;flex:none}
+  .legend{display:grid;gap:10px;margin-top:6px}
+  .legend div{display:flex;align-items:flex-start;font-size:14px}
+
+  /* table of specs */
+  .spec{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+  .spec td{border-bottom:1px solid #ddd;padding:8px 4px;vertical-align:top}
+  .spec td:first-child{font-weight:700;white-space:nowrap;width:30%}
+
+  /* checklist */
+  .check{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  .check li{display:flex;gap:12px;align-items:flex-start;font-size:15px}
+  .box{width:22px;height:22px;border:2.4px solid var(--ink);flex:none;margin-top:2px;border-radius:2px}
+  .freq{font-size:11px;font-weight:700;border:1.5px solid var(--ink);border-radius:999px;padding:1px 8px;margin-left:6px;white-space:nowrap}
+
+  /* command cards */
+  .cards{display:grid;gap:14px}
+  .card{border:2.4px solid var(--ink);border-radius:4px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start}
+  .card .t{font-weight:700;font-size:14px;margin-bottom:4px}
+  .card .q{font-size:13.5px;color:#333}
+  .copy{font:inherit;font-size:12px;font-weight:700;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer;white-space:nowrap}
+  .copy:hover{background:var(--ink);color:#fff}
+  .copy.done{background:var(--accent);color:var(--ink)}
+
+  .note{display:flex;gap:12px;align-items:flex-start;background:var(--soft);padding:12px 14px;border-radius:4px;font-size:13.5px;margin-top:14px}
+  .bang{flex:none;width:26px;height:26px;border:2.4px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:14px;background:#fff}
+
+  @media (max-width:640px){
+    body{padding:12px 0 48px}
+    .page{padding:32px 16px 56px;margin-bottom:16px}
+    .cover{padding:36px 16px 64px;min-height:auto}
+    .step{grid-template-columns:1fr;gap:6px}
+    .num{font-size:48px}
+    .duo,.tri,.quad{grid-template-columns:1fr}
+    .parts{grid-template-columns:1fr 1fr}
+    .card{grid-template-columns:1fr}
+    .card .copy{justify-self:start}
+    .mark{right:-6px}
+    .frame.wide{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .frame.wide > svg{min-width:600px}
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .page{box-shadow:none;margin:0;page-break-after:always}
+    .copy{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ DRAWING KIT ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- person. Add a mouth inside a nested <svg viewBox="0 0 60 120">:
+         smile  M25 20 Q30 24 35 20   frown  M25 23 Q30 19 35 23 -->
+    <symbol id="man" viewBox="0 0 60 120">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M22 76 L20 114 L28 114 L30 82 L32 114 L40 114 L38 76 Z"/>
+        <path d="M17 38 L10 70 L15 71 L21 48"/>
+        <path d="M43 38 L50 70 L45 71 L39 48"/>
+        <path d="M16 40 Q16 32 25 32 L35 32 Q44 32 44 40 L42 78 L18 78 Z"/>
+        <circle cx="30" cy="16" r="13"/>
+      </g>
+    </symbol>
+    <!-- helper: the same person with a small sparkle by the head (Claude, a colleague, a tool) -->
+    <symbol id="helper" viewBox="0 0 60 120">
+      <use href="#man"/>
+      <path d="M50 1 V11 M45 6 H55 M46.5 2.5 L53.5 9.5 M53.5 2.5 L46.5 9.5" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="laptop" viewBox="0 0 80 60">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <rect x="11" y="4" width="58" height="40" rx="3"/>
+        <path d="M2 48 L78 48 L72 56 L8 56 Z"/>
+      </g>
+      <path d="M20 16 L26 21 L20 26 M30 27 L40 27" fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="cloud" viewBox="0 0 100 60">
+      <path d="M25 52 Q6 52 6 37 Q6 22 23 22 Q27 6 46 6 Q63 6 69 20 Q93 18 94 37 Q94 52 77 52 Z" fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="vault" viewBox="0 0 70 70">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="4" y="4" width="62" height="56" rx="4"/>
+        <circle cx="35" cy="32" r="14"/>
+        <path d="M35 18 L35 22 M35 42 L35 46 M21 32 L25 32 M45 32 L49 32"/>
+        <path d="M35 32 L42 26"/>
+        <path d="M12 60 L12 66 M58 60 L58 66"/>
+      </g>
+    </symbol>
+    <symbol id="globe" viewBox="0 0 60 60">
+      <g fill="#fff" stroke="#111" stroke-width="2.4">
+        <circle cx="30" cy="30" r="25"/>
+        <ellipse cx="30" cy="30" rx="11" ry="25" fill="none"/>
+        <path d="M5 30 H55 M9 17 H51 M9 43 H51" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="photo" viewBox="0 0 70 56">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <rect x="3" y="3" width="64" height="50" rx="3"/>
+        <path d="M8 46 L26 26 L38 38 L46 30 L62 46 Z"/>
+        <circle cx="50" cy="15" r="5"/>
+      </g>
+    </symbol>
+    <symbol id="film" viewBox="0 0 70 56">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <rect x="3" y="3" width="64" height="50" rx="3"/>
+        <path d="M3 13 H67 M3 43 H67" fill="none"/>
+        <path d="M29 20 L44 28 L29 36 Z" fill="#111"/>
+      </g>
+      <g fill="#111"><rect x="9" y="6" width="5" height="4"/><rect x="21" y="6" width="5" height="4"/><rect x="33" y="6" width="5" height="4"/><rect x="45" y="6" width="5" height="4"/><rect x="57" y="6" width="5" height="4"/>
+      <rect x="9" y="46" width="5" height="4"/><rect x="21" y="46" width="5" height="4"/><rect x="33" y="46" width="5" height="4"/><rect x="45" y="46" width="5" height="4"/><rect x="57" y="46" width="5" height="4"/></g>
+    </symbol>
+    <symbol id="folder" viewBox="0 0 70 56">
+      <path d="M3 10 Q3 5 8 5 L26 5 L32 12 L62 12 Q67 12 67 17 L67 48 Q67 53 62 53 L8 53 Q3 53 3 48 Z" fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="tagicon" viewBox="0 0 70 56">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <path d="M6 10 L40 10 L64 28 L40 46 L6 46 Z"/>
+        <circle cx="18" cy="28" r="5"/>
+      </g>
+    </symbol>
+    <symbol id="server" viewBox="0 0 60 80">
+      <g fill="#fff" stroke="#111" stroke-width="2.4">
+        <rect x="6" y="4" width="48" height="22" rx="2"/>
+        <rect x="6" y="29" width="48" height="22" rx="2"/>
+        <rect x="6" y="54" width="48" height="22" rx="2"/>
+      </g>
+      <g fill="#111"><circle cx="44" cy="15" r="2.5"/><circle cx="44" cy="40" r="2.5"/><circle cx="44" cy="65" r="2.5"/></g>
+    </symbol>
+    <symbol id="box" viewBox="0 0 80 70">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <path d="M6 20 L40 6 L74 20 L74 56 L40 66 L6 56 Z"/>
+        <path d="M6 20 L40 32 L74 20 M40 32 L40 66" fill="none"/>
+        <path d="M23 13 L57 26" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="doc" viewBox="0 0 56 70">
+      <path d="M4 4 H38 L52 18 V66 H4 Z" fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M38 4 V18 H52" fill="none" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M12 30 H44 M12 40 H40 M12 50 H44" stroke="#bbb" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#111"/>
+    </marker>
+  </defs>
+</svg>
+
+<!-- ============ COVER ============ -->
+<section class="page cover">
+  <div class="name">ANVISNING</div>
+  <div class="desc">Assembly instructions for making assembly instructions</div>
+  <div class="art">
+    <svg viewBox="0 0 560 360" width="560" aria-label="A person hands a messy document to a helper, who turns it into a booklet">
+      <use href="#doc" x="40" y="236" width="64" height="80"/>
+      <text x="44" y="226" font-size="22" font-weight="900">?!</text>
+      <svg x="120" y="150" width="110" height="200" viewBox="0 0 60 120"><use href="#man"/><path d="M25 20 Q30 24 35 20" class="stroke"/></svg>
+      <path d="M240 250 C 270 200, 300 200, 330 240" class="stroke" stroke-dasharray="6 7" marker-end="url(#arr)"/>
+      <svg x="330" y="150" width="110" height="200" viewBox="0 0 60 120"><use href="#helper"/><path d="M25 20 Q30 24 35 20" class="stroke"/></svg>
+      <g transform="translate(450 230)">
+        <rect x="0" y="0" width="70" height="90" rx="3" fill="#fff" stroke="#111" stroke-width="2.4"/>
+        <text x="35" y="44" font-size="34" font-weight="900" text-anchor="middle">1</text>
+        <svg x="22" y="52" width="26" height="30" viewBox="0 0 60 120"><use href="#man"/></svg>
+      </g>
+      <path d="M20 352 H540" class="stroke"/>
+    </svg>
+  </div>
+  <div class="foot">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <span class="badge">
+        <svg viewBox="0 0 60 120" width="12"><use href="#man"/></svg>
+        <svg viewBox="0 0 60 120" width="12"><use href="#helper"/></svg>
+        You + agent
+      </span>
+      <span class="badge">⏱ ~5 min</span>
+    </div>
+    <span class="logo">SKILL</span>
+  </div>
+  <span class="code">AA-0001 · v1</span>
+</section>
+
+<!-- ============ PARTS LIST ============ -->
+<section class="page">
+  <h2>What's in the box</h2>
+  <p class="sub">Crossed-out parts are not required. Really.</p>
+  <div class="parts">
+    <div class="part">
+      <span class="qty">1×</span>
+      <svg viewBox="0 0 80 60" width="80" style="margin:auto"><use href="#laptop"/></svg>
+      <div class="lbl">An agent</div><div class="fn">Claude Code or similar</div>
+    </div>
+    <div class="part">
+      <span class="qty">1×</span>
+      <svg viewBox="0 0 56 70" width="48" style="margin:auto"><use href="#doc"/></svg>
+      <div class="lbl">A topic</div><div class="fn">a how-to, a workflow</div>
+    </div>
+    <div class="part">
+      <span class="qty">1×</span>
+      <svg viewBox="0 0 80 70" width="70" style="margin:auto"><use href="#box"/></svg>
+      <div class="lbl">This skill</div><div class="fn">SKILL.md + template</div>
+    </div>
+    <div class="part">
+      <span class="qty">0–1×</span>
+      <svg viewBox="0 0 60 60" width="54" style="margin:auto"><use href="#globe"/></svg>
+      <div class="lbl">Web search</div><div class="fn">to verify facts</div>
+    </div>
+    <div class="part x">
+      <svg viewBox="0 0 60 120" width="30" style="margin:auto"><use href="#man"/></svg>
+      <div class="lbl">Illustrator</div><div class="fn">not needed</div>
+    </div>
+    <div class="part x">
+      <svg viewBox="0 0 70 56" width="64" style="margin:auto"><use href="#photo"/></svg>
+      <div class="lbl">Stock images</div><div class="fn">not needed</div>
+    </div>
+    <div class="part x">
+      <svg viewBox="0 0 80 60" width="74" style="margin:auto"><use href="#laptop"/></svg>
+      <div class="lbl">Design tool</div><div class="fn">not needed</div>
+    </div>
+    <div class="part x">
+      <svg viewBox="0 0 56 70" width="44" style="margin:auto"><use href="#doc"/></svg>
+      <div class="lbl">Long paragraphs</div><div class="fn">forbidden</div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:22px"><span class="bang">!</span>
+    <div><b>Why a manual?</b> People skip docs but they follow pictures. One idea per panel, a big number, a ✓ and a ✕ — readers know exactly what to do next.</div>
+  </div>
+  <span class="pno">2</span>
+</section>
+
+<!-- ============ TWO-PERSON RULE ============ -->
+<section class="page">
+  <h2>This product needs two people</h2>
+  <p class="sub">You bring the topic and the judgment. The agent brings the drawings and the layout.</p>
+  <div class="duo">
+    <div class="panel no">
+      <span class="mark">✕</span>
+      <svg viewBox="0 0 300 200">
+        <use href="#doc" x="196" y="60" width="70" height="88"/>
+        <svg x="60" y="40" width="80" height="150" viewBox="0 0 60 120"><use href="#man"/><path d="M25 23 Q30 19 35 23" class="stroke"/></svg>
+        <text x="132" y="62" font-size="28" font-weight="900">?</text>
+        <text x="152" y="44" font-size="20" font-weight="900">?</text>
+        <path d="M40 190 H280" class="stroke"/>
+      </svg>
+      <h4>Alone with a wall of text</h4>
+      <p>Twelve paragraphs nobody finishes. The important warning is in paragraph nine.</p>
+    </div>
+    <div class="panel">
+      <span class="mark">✓</span>
+      <svg viewBox="0 0 300 200">
+        <svg x="40" y="40" width="80" height="150" viewBox="0 0 60 120"><use href="#man"/><path d="M25 20 Q30 24 35 20" class="stroke"/></svg>
+        <svg x="180" y="40" width="80" height="150" viewBox="0 0 60 120"><use href="#helper"/><path d="M25 20 Q30 24 35 20" class="stroke"/></svg>
+        <use href="#box" x="118" y="128" width="64" height="56"/>
+        <path d="M40 190 H280" class="stroke"/>
+      </svg>
+      <h4>You + agent + this kit</h4>
+      <p>A booklet with steps, traps and copy-ready commands, in one HTML file.</p>
+    </div>
+  </div>
+  <span class="pno">3</span>
+</section>
+
+<!-- ============ STEPS ============ -->
+<section class="page">
+  <div class="step">
+    <div class="num">1</div>
+    <div>
+      <h3>Ask for it in one sentence</h3>
+      <p>Name the topic and say "IKEA-style manual". Add who it's for if it matters.</p>
+      <div class="frame">
+        <svg viewBox="0 0 640 140">
+          <svg x="20" y="10" width="64" height="124" viewBox="0 0 60 120"><use href="#man"/><path d="M25 20 Q30 24 35 20" class="stroke"/></svg>
+          <rect x="100" y="30" width="420" height="56" rx="28" fill="#fff" stroke="#111" stroke-width="2.4"/>
+          <path d="M112 70 L92 92 L130 80" fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+          <text x="126" y="64" font-size="14">"Make an IKEA-style manual for our onboarding."</text>
+          <use href="#laptop" x="540" y="40" width="90" height="68"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">2</div>
+    <div>
+      <h3>The agent plans pages, then picks one path</h3>
+      <p>Manuals don't list five options. The agent recommends one way and crosses out the rest.</p>
+      <div class="frame">
+        <svg viewBox="0 0 640 170">
+          <g font-size="13" font-weight="700">
+            <rect x="20" y="20" width="110" height="130" rx="4" fill="#fff" stroke="#111" stroke-width="2.4"/>
+            <text x="34" y="46">Cover</text><text x="34" y="70">Parts</text><text x="34" y="94">Steps</text><text x="34" y="118">✓ / ✕</text><text x="34" y="142">Help</text>
+          </g>
+          <path d="M140 85 H200" class="stroke" marker-end="url(#arr)"/>
+          <g font-size="13" font-weight="700" text-anchor="middle">
+            <rect x="214" y="22" width="120" height="40" rx="20" fill="#fff" stroke="#111" stroke-width="3.4"/><text x="274" y="47">Option A ✓</text>
+            <rect x="214" y="72" width="120" height="40" rx="20" fill="#fafafa" stroke="#111" stroke-width="2.4" stroke-dasharray="5 5"/><text x="274" y="97" fill="#888">Option B</text>
+            <rect x="214" y="122" width="120" height="40" rx="20" fill="#fafafa" stroke="#111" stroke-width="2.4" stroke-dasharray="5 5"/><text x="274" y="147" fill="#888">Option C</text>
+          </g>
+          <path d="M226 82 L322 102 M226 132 L322 152" stroke="#111" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="510" cy="85" r="70" fill="#fff" stroke="#111" stroke-width="2.4"/>
+          <path d="M340 42 L444 60" class="stroke"/>
+          <text x="510" y="72" font-size="13" font-weight="900" text-anchor="middle">KAFFEKOPP</text>
+          <text x="510" y="94" font-size="11" text-anchor="middle">faux-Swedish</text>
+          <text x="510" y="110" font-size="11" text-anchor="middle">product name</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">3</div>
+    <div>
+      <h3>It screenshots its own work and fixes it</h3>
+      <p>Headless Chrome, desktop and phone width. Overflowing labels and collisions get fixed before you ever see them.</p>
+      <div class="frame">
+        <svg viewBox="0 0 640 140">
+          <rect x="20" y="16" width="170" height="110" rx="4" fill="#fff" stroke="#111" stroke-width="2.4"/>
+          <rect x="40" y="40" width="96" height="26" rx="13" fill="#fff" stroke="#111" stroke-width="2"/>
+          <text x="52" y="58" font-size="12" class="mono">overflowing-lab</text>
+          <path d="M210 70 H270" class="stroke" marker-end="url(#arr)"/>
+          <rect x="290" y="16" width="196" height="110" rx="4" fill="#fff" stroke="#111" stroke-width="2.4"/>
+          <rect x="304" y="40" width="172" height="26" rx="13" fill="#fff" stroke="#111" stroke-width="2"/>
+          <text x="316" y="58" font-size="11" class="mono">overflowing-label</text>
+          <rect x="500" y="16" width="56" height="110" rx="8" fill="#fff" stroke="#111" stroke-width="2.4"/>
+          <path d="M512 36 H544 M512 50 H540 M512 64 H544" stroke="#bbb" stroke-width="4" stroke-linecap="round"/>
+          <text x="572" y="60" font-size="12" font-weight="700">390px</text>
+          <text x="572" y="78" font-size="12" font-weight="700">too</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <span class="pno">4</span>
+</section>
+
+<!-- ============ PARTS BAG (lettered callouts) + SPEC TABLE ============ -->
+<section class="page">
+  <h2>Parts bag: what's in the skill</h2>
+  <p class="sub">Lettered callouts work for any structure: folders, anatomy, a screen layout.</p>
+  <div class="duo" style="align-items:start">
+    <div class="frame" style="margin-top:0">
+      <svg viewBox="0 0 320 250">
+        <use href="#folder" x="10" y="6" width="60" height="48"/>
+        <text x="80" y="38" font-size="15" font-weight="900" class="mono">ikea-style-manual/</text>
+        <g stroke="#111" stroke-width="2" fill="none">
+          <path d="M40 56 V204"/>
+          <path d="M40 84 H70 M40 124 H70 M40 164 H70 M40 204 H70"/>
+        </g>
+        <g font-size="14" class="mono">
+          <text x="80" y="89">SKILL.md</text>
+          <text x="80" y="129">assets/template.html</text>
+          <text x="80" y="169">scripts/screenshot.sh</text>
+          <text x="80" y="209">(your manual).html</text>
+        </g>
+        <g font-size="12" font-weight="900" text-anchor="middle">
+          <circle cx="296" cy="84" r="13" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="296" y="89">A</text>
+          <circle cx="296" cy="124" r="13" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="296" y="129">B</text>
+          <circle cx="296" cy="164" r="13" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="296" y="169">C</text>
+          <circle cx="296" cy="204" r="13" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="296" y="209">D</text>
+        </g>
+      </svg>
+    </div>
+    <div class="legend">
+      <div><span class="tag">A</span><span><b>Rules</b>: page catalog, visual rules, writing rules, SVG gotchas.</span></div>
+      <div><span class="tag">B</span><span><b>Design system</b>: CSS, every component, the drawing kit. Always the starting point.</span></div>
+      <div><span class="tag">C</span><span><b>Self-check</b>: renders desktop + mobile screenshots for the agent to inspect.</span></div>
+      <div><span class="tag">D</span><span><b>Output</b>: one self-contained HTML file. Works offline, prints as a booklet.</span></div>
+    </div>
+  </div>
+  <table class="spec" style="margin-top:24px">
+    <tr><td>Pages</td><td>6–15, one question per page</td></tr>
+    <tr><td>Words per step</td><td>≤ 3 sentences</td></tr>
+    <tr><td>Line weight</td><td>2.4 everywhere, 3.4 for the recommended outcome</td></tr>
+    <tr><td>Color</td><td>Black on white. One tiny accent, at most.</td></tr>
+  </table>
+  <span class="pno">5</span>
+</section>
+
+<!-- ============ ✓/✕ PAIR + DECISION TREE ============ -->
+<section class="page">
+  <h2>Numbers do the talking</h2>
+  <p class="sub">A ✓/✕ pair beats an adjective. Show the actual number.</p>
+  <div class="duo">
+    <div class="panel no">
+      <span class="mark">✕</span>
+      <svg viewBox="0 0 280 150">
+        <use href="#photo" x="40" y="20" width="150" height="120"/>
+        <text x="200" y="70" font-size="26" font-weight="900">8.4</text>
+        <text x="200" y="96" font-size="16" font-weight="700">MB</text>
+      </svg>
+      <h4>"Images should be small"</h4>
+      <p>Everybody agrees, nobody does it.</p>
+    </div>
+    <div class="panel">
+      <span class="mark">✓</span>
+      <svg viewBox="0 0 280 150">
+        <use href="#photo" x="60" y="44" width="100" height="80"/>
+        <text x="180" y="86" font-size="26" font-weight="900">240</text>
+        <text x="180" y="110" font-size="16" font-weight="700">KB</text>
+      </svg>
+      <h4>"WebP, ≤ 2000px, ≤ 300 KB"</h4>
+      <p>Specific enough to check.</p>
+    </div>
+  </div>
+
+  <h2 style="margin-top:36px">Decision tree</h2>
+  <p class="sub">For "where does X go?" questions. Pills ask, boxes answer.</p>
+  <div class="frame wide">
+    <svg viewBox="0 0 720 330" aria-label="Decision tree example">
+      <rect x="190" y="10" width="340" height="54" rx="27" fill="#fff" stroke="#111" stroke-width="2.4"/>
+      <text x="360" y="43" font-size="15" font-weight="700" text-anchor="middle">Can the step be drawn?</text>
+      <path d="M220 64 L130 120" class="stroke" marker-end="url(#arr)"/>
+      <text x="150" y="90" font-size="13" font-weight="900">yes</text>
+      <rect x="20" y="126" width="220" height="90" rx="4" fill="#fff" stroke="#111" stroke-width="3.4"/>
+      <text x="36" y="158" font-size="15" font-weight="900">A  Keep it</text>
+      <text x="36" y="184" font-size="12.5">Number + drawing</text>
+      <text x="36" y="204" font-size="12.5">+ ≤ 3 sentences</text>
+      <path d="M500 64 L560 120" class="stroke" marker-end="url(#arr)"/>
+      <text x="548" y="90" font-size="13" font-weight="900">no</text>
+      <rect x="420" y="126" width="280" height="54" rx="27" fill="#fff" stroke="#111" stroke-width="2.4"/>
+      <text x="560" y="159" font-size="14" font-weight="700" text-anchor="middle">Is it really two steps?</text>
+      <path d="M480 180 L400 230" class="stroke" marker-end="url(#arr)"/>
+      <text x="410" y="200" font-size="13" font-weight="900">yes</text>
+      <rect x="270" y="236" width="200" height="74" rx="4" fill="#fff" stroke="#111" stroke-width="3.4"/>
+      <text x="286" y="266" font-size="15" font-weight="900">B  Split it</text>
+      <text x="286" y="290" font-size="12.5">Draw each half</text>
+      <path d="M640 180 L640 230" class="stroke" marker-end="url(#arr)"/>
+      <text x="650" y="210" font-size="13" font-weight="900">no</text>
+      <rect x="500" y="236" width="200" height="74" rx="4" fill="#fff" stroke="#111" stroke-width="3.4"/>
+      <text x="516" y="266" font-size="15" font-weight="900">C  Make it a note</text>
+      <text x="516" y="290" font-size="12.5">Grey box with "!"</text>
+    </svg>
+  </div>
+  <span class="pno">6</span>
+</section>
+
+<!-- ============ LOOP + NEVER DO ============ -->
+<section class="page">
+  <h2>Loop</h2>
+  <p class="sub">Routines are circles. One short verb per stop.</p>
+  <div class="frame wide">
+    <svg viewBox="0 0 700 330" aria-label="Loop example">
+      <circle cx="350" cy="165" r="120" fill="none" stroke="#111" stroke-width="2.4" stroke-dasharray="4 8"/>
+      <svg x="320" y="110" width="60" height="112" viewBox="0 0 60 120"><use href="#helper"/><path d="M25 20 Q30 24 35 20" class="stroke"/></svg>
+      <g font-weight="900" text-anchor="middle" font-size="16">
+        <circle cx="350" cy="45" r="30" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="350" y="51">Plan</text>
+        <circle cx="470" cy="165" r="30" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="470" y="171">Draw</text>
+        <circle cx="350" cy="285" r="30" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="350" y="291">Shoot</text>
+        <circle cx="230" cy="165" r="30" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="230" y="171">Fix</text>
+      </g>
+      <g font-size="12.5">
+        <text x="392" y="34" font-weight="700">① pick pages</text>
+        <text x="512" y="160" font-weight="700">② build from template</text>
+        <text x="392" y="314" font-weight="700">③ screenshot.sh</text>
+        <text x="40" y="160" font-weight="700">④ fix, re-shoot</text>
+      </g>
+    </svg>
+  </div>
+
+  <h2 style="margin-top:36px">Never do</h2>
+  <p class="sub">The four ways a manual stops being a manual.</p>
+  <div class="quad">
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 260 100"><use href="#doc" x="40" y="10" width="64" height="80"/><use href="#doc" x="110" y="10" width="64" height="80"/><use href="#doc" x="180" y="10" width="64" height="80"/></svg>
+      <h4>Paragraphs</h4><p>If a step needs more than three sentences, it needs another panel.</p></div>
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 260 100"><g font-size="13" font-weight="700" text-anchor="middle"><rect x="10" y="30" width="70" height="40" rx="20" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="45" y="55">A?</text><rect x="95" y="30" width="70" height="40" rx="20" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="130" y="55">B?</text><rect x="180" y="30" width="70" height="40" rx="20" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="215" y="55">C?</text></g></svg>
+      <h4>"It depends"</h4><p>Pick one path. Cross out the others and say why.</p></div>
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 260 100"><g font-size="22" font-weight="900"><rect x="20" y="20" width="220" height="60" rx="4" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="40" y="58" fill="#e33">COLOR</text><text x="140" y="58" fill="#36c">COLOR</text></g></svg>
+      <h4>Colorful</h4><p>Black line art on white. That's the whole look.</p></div>
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 260 100"><rect x="30" y="30" width="120" height="40" rx="20" fill="#fff" stroke="#111" stroke-width="2"/><text x="44" y="56" font-size="14" class="mono">a-label-that-overfl</text></svg>
+      <h4>Unchecked SVG text</h4><p>SVG text never wraps. Always screenshot.</p></div>
+  </div>
+  <span class="pno">7</span>
+</section>
+
+<!-- ============ MAINTENANCE CHECKLIST ============ -->
+<section class="page">
+  <h2>Maintenance checklist</h2>
+  <p class="sub">For anything that keeps running after the manual is read.</p>
+  <ul class="check">
+    <li><span class="box"></span><div>Open the result on a phone and a laptop <span class="freq">monthly</span></div></li>
+    <li><span class="box"></span><div>Re-verify prices, limits and UI labels quoted in the manual <span class="freq">quarterly</span></div></li>
+    <li><span class="box"></span><div>Bump the version code on the cover when anything changes <span class="freq">every edit</span></div></li>
+  </ul>
+  <span class="pno">8</span>
+</section>
+
+<!-- ============ COMMAND CARDS ============ -->
+<section class="page">
+  <h2>Command cards</h2>
+  <p class="sub">Paste-ready. Replace the obvious placeholders.</p>
+  <div class="cards">
+    <div class="card"><span class="tag">1</span><div><div class="t">New manual</div><div class="q">Make an IKEA-style manual explaining how our team ships a release, for new hires. Save it to ./docs/release-manual.html.</div></div><button class="copy">Copy</button></div>
+    <div class="card"><span class="tag">2</span><div><div class="t">From an existing doc</div><div class="q">Turn README.md into an IKEA-style manual. Keep every command, cut every paragraph, and add a ✓/✕ page for the three most common mistakes.</div></div><button class="copy">Copy</button></div>
+    <div class="card"><span class="tag">3</span><div><div class="t">Another one like before</div><div class="q">Same style as the last manual: an IKEA-style manual for setting up the office printer, with a "stuck?" back cover.</div></div><button class="copy">Copy</button></div>
+  </div>
+  <span class="pno">9</span>
+</section>
+
+<!-- ============ BACK COVER ============ -->
+<section class="page" style="text-align:center;padding-top:64px">
+  <svg viewBox="0 0 400 220" width="400" style="margin:0 auto" aria-hidden="true">
+    <svg x="110" y="40" width="80" height="160" viewBox="0 0 60 120"><use href="#man"/><path d="M25 23 Q30 19 35 23" class="stroke"/></svg>
+    <text x="196" y="66" font-size="34" font-weight="900">?</text>
+    <path d="M200 120 H240" class="stroke" marker-end="url(#arr)"/>
+    <use href="#laptop" x="250" y="96" width="110" height="82"/>
+    <path d="M60 200 H340" class="stroke"/>
+  </svg>
+  <h2 style="margin-top:18px">Stuck?</h2>
+  <p style="max-width:520px;margin:10px auto 0;font-size:15px">Don't guess. Tell your agent:</p>
+  <div class="frame" style="max-width:520px;margin:18px auto 0;text-align:left">
+    <p class="mono" style="font-size:14px">I'm stuck on step ___.<br>I did: ___<br>The screen says: ___ (paste the error or a screenshot)</p>
+  </div>
+  <p class="cap" style="margin-top:28px">ANVISNING · ikea-style-manual · AA-0001</p>
+  <span class="pno">10</span>
+</section>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    var label = btn.textContent;
+    btn.addEventListener('click', function(){
+      var text = btn.parentElement.querySelector('.q').textContent;
+      function ok(){ btn.textContent='✓'; btn.classList.add('done'); setTimeout(function(){btn.textContent=label;btn.classList.remove('done');},1400); }
+      try{ navigator.clipboard.writeText(text).then(ok, function(){ fallback(text); ok(); }); }
+      catch(e){ fallback(text); ok(); }
+    });
+  });
+  function fallback(text){
+    var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    ta.remove();
+  }
+</script>
+</body>
+</html>

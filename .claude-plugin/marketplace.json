@@ -1,0 +1,12 @@
+{
+  "name": "ikea-style-manual",
+  "owner": { "name": "Vic Chen" },
+  "description": "IKEA-style assembly manuals for anything, made by your agent.",
+  "plugins": [
+    {
+      "name": "ikea-style-manual",
+      "source": "./",
+      "description": "Turn any how-to into an IKEA-style flat-pack assembly manual as a single HTML file."
+    }
+  ]
+}

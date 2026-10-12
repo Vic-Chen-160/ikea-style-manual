@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KAFFEKOPP 手沖說明書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111;
+    --paper:#fff;
+    --desk:#e9e7e2;
+    --muted:#666;
+    --line:#111;
+    --soft:#f3f2ee;
+    --accent:#ffdb00;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--desk);
+    color:var(--ink);
+    font-family:Verdana,"Noto Sans TC",system-ui,sans-serif;
+    line-height:1.55;
+    padding:24px 16px 80px;
+  }
+  .page{
+    position:relative;
+    max-width:820px;
+    margin:0 auto 28px;
+    background:var(--paper);
+    padding:48px 48px 64px;
+    box-shadow:0 1px 0 rgba(0,0,0,.08),0 10px 30px rgba(0,0,0,.08);
+    overflow:hidden;
+  }
+  .pno{position:absolute;right:28px;bottom:20px;font-weight:700;font-size:15px}
+  .code{position:absolute;left:28px;bottom:20px;font-size:11px;color:var(--muted);letter-spacing:.08em}
+  h1,h2,h3{margin:0;font-weight:900;letter-spacing:.01em}
+  h2{font-size:22px;margin-bottom:6px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 28px}
+  p{margin:0}
+  code,.mono{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.92em}
+  .k{background:var(--soft);padding:1px 6px;border-radius:3px}
+  svg{display:block;max-width:100%;height:auto}
+  .stroke{fill:none;stroke:var(--line);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+  /* cover */
+  .cover{padding:56px 48px 72px;min-height:min(860px,120vw);display:flex;flex-direction:column}
+  .cover .name{font-size:clamp(44px,10vw,92px);font-weight:900;letter-spacing:-.02em;line-height:1}
+  .cover .desc{font-size:16px;margin-top:10px;font-weight:500}
+  .cover .art{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 0}
+  .cover .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:2.4px solid var(--ink);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px}
+  .logo{background:var(--ink);color:#fff;font-weight:900;padding:6px 12px;letter-spacing:.06em;font-size:18px;border-radius:3px}
+
+  /* steps */
+  .step{display:grid;grid-template-columns:84px 1fr;gap:18px;align-items:start;padding:28px 0;border-top:1px dashed #bbb}
+  .step:first-of-type{border-top:0;padding-top:4px}
+  .num{font-size:64px;font-weight:900;line-height:.9}
+  .step h3{font-size:18px;margin-bottom:6px}
+  .step p{font-size:14.5px}
+  .frame{border:2.4px solid var(--ink);border-radius:4px;padding:16px;margin-top:14px;position:relative;background:#fff}
+  .cap{font-size:13px;color:var(--muted);margin-top:8px}
+
+  /* ok / no marks */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .quad{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .mark{position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;background:#fff;border:2.4px solid var(--ink);display:grid;place-items:center;font-weight:900;font-size:20px;line-height:1}
+  .panel{border:2.4px solid var(--ink);border-radius:4px;padding:18px 16px 16px;position:relative;background:#fff}
+  .panel h4{margin:10px 0 4px;font-size:15px}
+  .panel p{font-size:13.5px;color:#333}
+  .panel.no{background:repeating-linear-gradient(135deg,#fff 0 10px,#fafafa 10px 20px)}
+
+  /* parts */
+  .parts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .part{border:1.5px solid #ccc;border-radius:4px;padding:14px 10px 12px;text-align:center;position:relative}
+  .part .qty{position:absolute;left:10px;top:8px;font-weight:900;font-size:15px}
+  .part .lbl{font-weight:700;font-size:13.5px;margin-top:8px}
+  .part .fn{font-size:12px;color:var(--muted)}
+  .part.x{opacity:.55}
+  .part.x::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(to top right,transparent calc(50% - 1.5px),#111 calc(50% - 1.5px),#111 calc(50% + 1.5px),transparent calc(50% + 1.5px))}
+
+  /* letters */
+  .tag{display:inline-grid;place-items:center;min-width:26px;height:26px;border:2.4px solid var(--ink);border-radius:50%;font-weight:900;font-size:13px;margin-right:8px;flex:none}
+  .legend{display:grid;gap:10px;margin-top:6px}
+  .legend div{display:flex;align-items:flex-start;font-size:14px}
+
+  /* table of specs */
+  .spec{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+  .spec td{border-bottom:1px solid #ddd;padding:8px 4px;vertical-align:top}
+  .spec td:first-child{font-weight:700;white-space:nowrap;width:30%}
+
+  /* checklist */
+  .check{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  .check li{display:flex;gap:12px;align-items:flex-start;font-size:15px}
+  .box{width:22px;height:22px;border:2.4px solid var(--ink);flex:none;margin-top:2px;border-radius:2px}
+  .freq{font-size:11px;font-weight:700;border:1.5px solid var(--ink);border-radius:999px;padding:1px 8px;margin-left:6px;white-space:nowrap}
+
+  /* command cards */
+  .cards{display:grid;gap:14px}
+  .card{border:2.4px solid var(--ink);border-radius:4px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start}
+  .card .t{font-weight:700;font-size:14px;margin-bottom:4px}
+  .card .q{font-size:13.5px;color:#333}
+  .copy{font:inherit;font-size:12px;font-weight:700;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer;white-space:nowrap}
+  .copy:hover{background:var(--ink);color:#fff}
+  .copy.done{background:var(--accent);color:var(--ink)}
+
+  .note{display:flex;gap:12px;align-items:flex-start;background:var(--soft);padding:12px 14px;border-radius:4px;font-size:13.5px;margin-top:14px}
+  .bang{flex:none;width:26px;height:26px;border:2.4px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:14px;background:#fff}
+
+  @media (max-width:640px){
+    body{padding:12px 0 48px}
+    .page{padding:32px 16px 56px;margin-bottom:16px}
+    .cover{padding:36px 16px 64px;min-height:auto}
+    .step{grid-template-columns:1fr;gap:6px}
+    .num{font-size:48px}
+    .duo,.tri,.quad{grid-template-columns:1fr}
+    .parts{grid-template-columns:1fr 1fr}
+    .card{grid-template-columns:1fr}
+    .card .copy{justify-self:start}
+    .mark{right:-6px}
+    .frame.wide{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .frame.wide > svg{min-width:600px}
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .page{box-shadow:none;margin:0;page-break-after:always}
+    .copy{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ DRAWING KIT ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- person. Add a mouth inside a nested <svg viewBox="0 0 60 120">:
+         smile  M25 20 Q30 24 35 20   frown  M25 23 Q30 19 35 23 -->
+    <symbol id="man" viewBox="0 0 60 120">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M22 76 L20 114 L28 114 L30 82 L32 114 L40 114 L38 76 Z"/>
+        <path d="M17 38 L10 70 L15 71 L21 48"/>
+        <path d="M43 38 L50 70 L45 71 L39 48"/>
+        <path d="M16 40 Q16 32 25 32 L35 32 Q44 32 44 40 L42 78 L18 78 Z"/>
+        <circle cx="30" cy="16" r="13"/>
+      </g>
+    </symbol>
+    <!-- helper: the same person with a small sparkle by the head (Claude, a colleague, a tool) -->
+    <symbol id="helper" viewBox="0 0 60 120">
+      <use href="#man"/>
+      <path d="M50 1 V11 M45 6 H55 M46.5 2.5 L53.5 9.5 M53.5 2.5 L46.5 9.5" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="laptop" viewBox="0 0 80 60">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <rect x="11" y="4" width="58" height="40" rx="3"/>
+        <path d="M2 48 L78 48 L72 56 L8 56 Z"/>
+      </g>
+      <path d="M20 16 L26 21 L20 26 M30 27 L40 27" fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="cloud" viewBox="0 0 100 60">
+      <path d="M25 52 Q6 52 6 37 Q6 22 23 22 Q27 6 46 6 Q63 6 69 20 Q93 18 94 37 Q94 52 77 52 Z" fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="vault" viewBox="0 0 70 70">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="4" y="4" width="62" height="56" rx="4"/>
+        <circle cx="35" cy="32" r="14"/>
+        <path d="M35 18 L35 22 M35 42 L35 46 M21 32 L25 32 M45 32 L49 32"/>
+        <path d="M35 32 L42 26"/>
+        <path d="M12 60 L12 66 M58 60 L58 66"/>
+      </g>
+    </symbol>
+    <symbol id="globe" viewBox="0 0 60 60">
+      <g fill="#fff" stroke="#111" stroke-width="2.4">
+        <circle cx="30" cy="30" r="25"/>
+        <ellipse cx="30" cy="30" rx="11" ry="25" fill="none"/>
+        <path d="M5 30 H55 M9 17 H51 M9 43 H51" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="photo" viewBox="0 0 70 56">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <rect x="3" y="3" width="64" height="50" rx="3"/>
+        <path d="M8 46 L26 26 L38 38 L46 30 L62 46 Z"/>
+        <circle cx="50" cy="15" r="5"/>
+      </g>
+    </symbol>
+    <symbol id="film" viewBox="0 0 70 56">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <rect x="3" y="3" width="64" height="50" rx="3"/>
+        <path d="M3 13 H67 M3 43 H67" fill="none"/>
+        <path d="M29 20 L44 28 L29 36 Z" fill="#111"/>
+      </g>
+      <g fill="#111"><rect x="9" y="6" width="5" height="4"/><rect x="21" y="6" width="5" height="4"/><rect x="33" y="6" width="5" height="4"/><rect x="45" y="6" width="5" height="4"/><rect x="57" y="6" width="5" height="4"/>
+      <rect x="9" y="46" width="5" height="4"/><rect x="21" y="46" width="5" height="4"/><rect x="33" y="46" width="5" height="4"/><rect x="45" y="46" width="5" height="4"/><rect x="57" y="46" width="5" height="4"/></g>
+    </symbol>
+    <symbol id="folder" viewBox="0 0 70 56">
+      <path d="M3 10 Q3 5 8 5 L26 5 L32 12 L62 12 Q67 12 67 17 L67 48 Q67 53 62 53 L8 53 Q3 53 3 48 Z" fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="tagicon" viewBox="0 0 70 56">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <path d="M6 10 L40 10 L64 28 L40 46 L6 46 Z"/>
+        <circle cx="18" cy="28" r="5"/>
+      </g>
+    </symbol>
+    <symbol id="server" viewBox="0 0 60 80">
+      <g fill="#fff" stroke="#111" stroke-width="2.4">
+        <rect x="6" y="4" width="48" height="22" rx="2"/>
+        <rect x="6" y="29" width="48" height="22" rx="2"/>
+        <rect x="6" y="54" width="48" height="22" rx="2"/>
+      </g>
+      <g fill="#111"><circle cx="44" cy="15" r="2.5"/><circle cx="44" cy="40" r="2.5"/><circle cx="44" cy="65" r="2.5"/></g>
+    </symbol>
+    <symbol id="box" viewBox="0 0 80 70">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <path d="M6 20 L40 6 L74 20 L74 56 L40 66 L6 56 Z"/>
+        <path d="M6 20 L40 32 L74 20 M40 32 L40 66" fill="none"/>
+        <path d="M23 13 L57 26" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="doc" viewBox="0 0 56 70">
+      <path d="M4 4 H38 L52 18 V66 H4 Z" fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M38 4 V18 H52" fill="none" stroke="#111" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M12 30 H44 M12 40 H40 M12 50 H44" stroke="#bbb" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#111"/>
+    </marker>
+    <symbol id="kettle" viewBox="0 0 100 74">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M30 20 H72 Q78 20 78 28 V62 Q78 68 72 68 H30 Q24 68 24 62 V28 Q24 20 30 20 Z"/>
+        <path d="M78 30 Q94 30 94 45 Q94 58 78 58"/>
+        <path d="M40 20 V14 H62 V20"/><path d="M47 14 V9 H55 V14"/>
+        <path d="M24 60 Q10 60 10 40 Q10 22 3 14" fill="none" stroke-width="5"/>
+        <path d="M24 60 Q10 60 10 40 Q10 22 3 14" fill="none" stroke="#fff" stroke-width="1.2"/>
+      </g>
+    </symbol>
+    <symbol id="dripper" viewBox="0 0 80 64">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M6 8 H74 L54 46 H26 Z"/>
+        <path d="M14 50 H66 V56 H14 Z"/>
+        <path d="M30 18 L36 38 M40 18 V38 M50 18 L44 38" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="mug" viewBox="0 0 72 64">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M8 18 H52 V52 Q52 60 44 60 H16 Q8 60 8 52 Z"/>
+        <path d="M52 26 Q66 26 66 38 Q66 50 52 50"/>
+        <path d="M20 12 Q16 8 20 4 M30 12 Q26 8 30 4 M40 12 Q36 8 40 4" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="scale" viewBox="0 0 96 40">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round">
+        <rect x="4" y="12" width="88" height="24" rx="4"/>
+        <path d="M12 12 V8 H84 V12"/>
+        <rect x="32" y="18" width="32" height="12" rx="2"/>
+      </g>
+      <text x="48" y="28" font-size="9" font-weight="700" text-anchor="middle" font-family="Menlo,monospace">0.0</text>
+    </symbol>
+    <symbol id="grinder" viewBox="0 0 64 96">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="14" y="34" width="32" height="56" rx="5"/>
+        <path d="M18 34 L22 24 H38 L42 34"/>
+        <path d="M30 24 V12 H54" fill="none"/>
+        <circle cx="56" cy="12" r="5"/>
+        <path d="M14 62 H46" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="bean" viewBox="0 0 30 40">
+      <ellipse cx="15" cy="20" rx="11" ry="16" fill="#fff" stroke="#111" stroke-width="2.4"/>
+      <path d="M15 5 Q9 20 15 35" fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="timer" viewBox="0 0 60 66">
+      <g fill="#fff" stroke="#111" stroke-width="2.4" stroke-linecap="round">
+        <circle cx="30" cy="36" r="26"/>
+        <path d="M24 4 H36 M30 4 V10" fill="none"/>
+        <path d="M30 36 V20 M30 36 L40 42" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="thermo" viewBox="0 0 30 80">
+      <g fill="#fff" stroke="#111" stroke-width="2.4">
+        <path d="M10 8 Q10 2 15 2 Q20 2 20 8 V54 A11 11 0 1 1 10 54 Z"/>
+      </g>
+      <circle cx="15" cy="63" r="6" fill="#111"/><rect x="13" y="24" width="4" height="38" fill="#111"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ 封面 ============ -->
+<section class="page cover">
+  <div class="name">KAFFEKOPP</div>
+  <div class="desc">手沖咖啡組裝說明　｜　一人份・15g・250ml</div>
+  <div class="art">
+    <svg viewBox="0 0 560 360" width="560" aria-label="一個人用手沖壺沖咖啡">
+      <svg x="60" y="150" width="110" height="200" viewBox="0 0 60 120"><use href="#man"/><path d="M25 20 Q30 24 35 20" class="stroke"/></svg>
+      <use href="#kettle" x="170" y="150" width="130" height="96"/>
+      <path d="M176 172 C 220 182, 280 200, 330 232" class="stroke" stroke-dasharray="3 7"/>
+      <use href="#scale" x="285" y="310" width="106" height="44"/>
+      <use href="#mug" x="300" y="262" width="64" height="57"/>
+      <use href="#dripper" x="292" y="222" width="80" height="64"/>
+      <use href="#mug" x="430" y="270" width="90" height="80"/>
+      <text x="446" y="258" font-size="22" font-weight="900">♥</text>
+      <path d="M20 352 H540" class="stroke"/>
+    </svg>
+  </div>
+  <div class="foot">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <span class="badge"><svg viewBox="0 0 60 120" width="12"><use href="#man"/></svg> 1 人</span>
+      <span class="badge">⏱ 約 4 分鐘</span>
+      <span class="badge">難度 ●○○</span>
+    </div>
+    <span class="logo">1:16</span>
+  </div>
+  <span class="code">AA-0002 · 版本 1</span>
+</section>
+
+<!-- ============ 零件 ============ -->
+<section class="page">
+  <h2>開箱：你需要的東西</h2>
+  <p class="sub">秤是唯一不能省的。打叉的東西，這杯用不到。</p>
+  <div class="parts">
+    <div class="part"><span class="qty">1×</span><svg viewBox="0 0 100 74" width="84" style="margin:auto"><use href="#kettle"/></svg><div class="lbl">細口手沖壺</div><div class="fn">控制水柱</div></div>
+    <div class="part"><span class="qty">1×</span><svg viewBox="0 0 80 64" width="70" style="margin:auto"><use href="#dripper"/></svg><div class="lbl">濾杯＋濾紙</div><div class="fn">錐形最好上手</div></div>
+    <div class="part"><span class="qty">1×</span><svg viewBox="0 0 64 96" width="44" style="margin:auto"><use href="#grinder"/></svg><div class="lbl">磨豆機</div><div class="fn">喝之前才磨</div></div>
+    <div class="part"><span class="qty">1×</span><svg viewBox="0 0 96 40" width="90" style="margin:auto"><use href="#scale"/></svg><div class="lbl">電子秤</div><div class="fn">要能計時更好</div></div>
+    <div class="part"><span class="qty">15g</span><svg viewBox="0 0 30 40" width="30" style="margin:auto"><use href="#bean"/></svg><div class="lbl">咖啡豆</div><div class="fn">烘焙後 2–4 週內</div></div>
+    <div class="part"><span class="qty">250g</span><svg viewBox="0 0 30 80" width="22" style="margin:auto"><use href="#thermo"/></svg><div class="lbl">熱水 92°C</div><div class="fn">煮滾放 1 分鐘</div></div>
+    <div class="part x"><svg viewBox="0 0 72 64" width="56" style="margin:auto"><use href="#mug"/></svg><div class="lbl">即溶粉</div><div class="fn">不需要</div></div>
+    <div class="part x"><svg viewBox="0 0 64 96" width="40" style="margin:auto"><use href="#grinder"/></svg><div class="lbl">現成咖啡粉</div><div class="fn">香氣半天就散</div></div>
+  </div>
+  <div class="note" style="margin-top:22px"><span class="bang">!</span>
+    <div><b>為什麼一定要秤？</b> 同一包豆子，差 2g 粉或 50g 水，味道就從「剛好」變「太淡」。用湯匙和目測，每一杯都是新的實驗。</div>
+  </div>
+  <span class="pno">2</span>
+</section>
+
+<!-- ============ 兩種沖法 ============ -->
+<section class="page">
+  <h2>這杯不靠感覺，靠數字</h2>
+  <p class="sub">好喝的手沖只有一個祕密：每次都一樣。</p>
+  <div class="duo">
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 300 200">
+        <svg x="50" y="40" width="80" height="150" viewBox="0 0 60 120"><use href="#man"/><path d="M25 23 Q30 19 35 23" class="stroke"/></svg>
+        <text x="122" y="62" font-size="28" font-weight="900">?</text><text x="142" y="44" font-size="20" font-weight="900">?</text>
+        <use href="#mug" x="180" y="110" width="80" height="72"/>
+        <path d="M40 190 H280" class="stroke"/>
+      </svg>
+      <h4>「大概三匙、水倒到差不多」</h4><p>今天好喝、明天很苦，而且不知道為什麼。</p></div>
+    <div class="panel"><span class="mark">✓</span>
+      <svg viewBox="0 0 300 200">
+        <svg x="40" y="40" width="80" height="150" viewBox="0 0 60 120"><use href="#man"/><path d="M25 20 Q30 24 35 20" class="stroke"/></svg>
+        <use href="#dripper" x="150" y="96" width="80" height="64"/>
+        <use href="#scale" x="140" y="156" width="100" height="42"/>
+        <text x="250" y="120" font-size="16" font-weight="900">15g</text>
+        <text x="250" y="146" font-size="16" font-weight="900">1:16</text>
+        <path d="M40 190 H280" class="stroke"/>
+      </svg>
+      <h4>15g 粉 ＋ 250g 水</h4><p>粉水比固定 1:16，難喝也知道下次改哪裡。</p></div>
+  </div>
+  <span class="pno">3</span>
+</section>
+
+<!-- ============ 全貌 ============ -->
+<section class="page">
+  <h2>全貌：豆子到杯子</h2>
+  <p class="sub">四個站，總共約 4 分鐘。水只在第 3 站出場。</p>
+  <div class="frame wide">
+    <svg viewBox="0 0 720 230" aria-label="手沖流程">
+      <use href="#bean" x="40" y="60" width="44" height="58"/>
+      <use href="#bean" x="70" y="80" width="36" height="48"/>
+      <text x="40" y="160" font-size="14" font-weight="700">① 秤豆 15g</text>
+      <path d="M128 100 H180" class="stroke" marker-end="url(#arr)"/>
+      <use href="#grinder" x="196" y="36" width="64" height="96"/>
+      <text x="190" y="160" font-size="14" font-weight="700">② 研磨</text>
+      <path d="M278 100 H330" class="stroke" marker-end="url(#arr)"/>
+      <use href="#kettle" x="340" y="30" width="90" height="66"/>
+      <use href="#dripper" x="380" y="90" width="80" height="64"/>
+      <text x="350" y="182" font-size="14" font-weight="700">③ 悶蒸＋注水</text>
+      <path d="M480 100 H540" class="stroke" marker-end="url(#arr)"/>
+      <use href="#mug" x="560" y="56" width="100" height="88"/>
+      <text x="566" y="172" font-size="14" font-weight="700">④ 喝</text>
+      <path d="M340 206 H470" class="stroke" stroke-dasharray="5 6"/>
+      <text x="352" y="224" font-size="12" fill="#555">92°C・250g・2:30 結束</text>
+    </svg>
+  </div>
+  <div class="legend" style="margin-top:18px">
+    <div><span class="tag">1</span>粉水比 1:16：15g 粉配 250g 水。想濃一點改 1:15。</div>
+    <div><span class="tag">2</span>水溫 92°C：煮滾後開蓋放 1 分鐘，差不多就到了。</div>
+    <div><span class="tag">3</span>總時間 2:30 左右：太快太淡，太慢太苦。</div>
+  </div>
+  <span class="pno">4</span>
+</section>
+
+<!-- ============ 步驟 1–2 ============ -->
+<section class="page">
+  <div class="step"><div class="num">1</div><div>
+    <h3>秤 15g 豆子</h3>
+    <p>放上秤、歸零、倒豆子。用豆子秤，不是用粉秤——磨完會有一點卡在磨豆機裡。</p>
+    <div class="frame"><svg viewBox="0 0 640 150">
+      <use href="#scale" x="60" y="80" width="180" height="76"/>
+      <use href="#bean" x="110" y="40" width="30" height="40"/><use href="#bean" x="138" y="46" width="28" height="36"/><use href="#bean" x="160" y="38" width="30" height="40"/>
+      <circle cx="430" cy="78" r="62" fill="#fff" stroke="#111" stroke-width="2.4"/>
+      <path d="M200 112 L370 90" class="stroke"/>
+      <rect x="380" y="56" width="100" height="44" rx="4" fill="#fff" stroke="#111" stroke-width="2.4"/>
+      <text x="430" y="86" font-size="22" font-weight="900" text-anchor="middle" class="mono">15.0</text>
+      <text x="430" y="124" font-size="12" font-weight="700" text-anchor="middle">公克</text>
+    </svg></div>
+  </div></div>
+  <div class="step"><div class="num">2</div><div>
+    <h3>磨成砂糖的粗細</h3>
+    <p>喝之前才磨。粗細像白砂糖：比鹽粗、比麵包粉細。</p>
+    <div class="frame"><svg viewBox="0 0 640 170">
+      <use href="#grinder" x="30" y="20" width="84" height="126"/>
+      <path d="M130 90 H180" class="stroke" marker-end="url(#arr)"/>
+      <g text-anchor="middle" font-size="13" font-weight="700">
+        <circle cx="250" cy="80" r="50" fill="#fff" stroke="#111" stroke-width="2.4"/>
+        <g fill="#111"><circle cx="234" cy="70" r="1.6"/><circle cx="246" cy="64" r="1.6"/><circle cx="258" cy="72" r="1.6"/><circle cx="240" cy="84" r="1.6"/><circle cx="254" cy="88" r="1.6"/><circle cx="266" cy="80" r="1.6"/><circle cx="248" cy="96" r="1.6"/><circle cx="230" cy="94" r="1.6"/></g>
+        <text x="250" y="152">太細：麵粉</text>
+        <circle cx="390" cy="80" r="50" fill="#fff" stroke="#111" stroke-width="3.4"/>
+        <g fill="#111"><circle cx="370" cy="66" r="3.2"/><circle cx="388" cy="62" r="3.2"/><circle cx="406" cy="70" r="3.2"/><circle cx="376" cy="84" r="3.2"/><circle cx="396" cy="88" r="3.2"/><circle cx="410" cy="90" r="3.2"/><circle cx="384" cy="100" r="3.2"/></g>
+        <text x="390" y="152">剛好：砂糖 ✓</text>
+        <circle cx="530" cy="80" r="50" fill="#fff" stroke="#111" stroke-width="2.4"/>
+        <g fill="#111"><circle cx="512" cy="68" r="6"/><circle cx="540" cy="64" r="6"/><circle cx="522" cy="94" r="6"/><circle cx="548" cy="90" r="6"/></g>
+        <text x="530" y="152">太粗：粗鹽</text>
+      </g>
+      <path d="M220 50 L280 110" stroke="#111" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M500 50 L560 110" stroke="#111" stroke-width="2.4" stroke-linecap="round"/>
+    </svg></div>
+  </div></div>
+  <span class="pno">5</span>
+</section>
+
+<!-- ============ 步驟 3–4 ============ -->
+<section class="page">
+  <div class="step"><div class="num">3</div><div>
+    <h3>濾紙先用熱水沖濕，再倒掉</h3>
+    <p>去掉紙味、順便溫杯。<b>倒掉這些水</b>，再把粉倒進去、輕拍抹平，秤歸零。</p>
+    <div class="frame"><svg viewBox="0 0 640 170">
+      <use href="#kettle" x="20" y="10" width="110" height="80"/>
+      <path d="M28 30 C 60 50, 110 70, 160 90" class="stroke" stroke-dasharray="3 7"/>
+      <use href="#dripper" x="150" y="76" width="100" height="80"/>
+      <path d="M270 110 H330" class="stroke" marker-end="url(#arr)"/>
+      <use href="#mug" x="350" y="70" width="80" height="72"/>
+      <path d="M440 70 C 480 40, 500 60, 500 100" class="stroke" marker-end="url(#arr)"/>
+      <text x="456" y="140" font-size="13" font-weight="700">倒進水槽</text>
+      <rect x="540" y="66" width="80" height="40" rx="4" fill="#fff" stroke="#111" stroke-width="2.4"/><text x="580" y="94" font-size="20" font-weight="900" text-anchor="middle" class="mono">0.0</text><text x="580" y="130" font-size="13" font-weight="700" text-anchor="middle">秤歸零</text>
+    </svg></div>
+  </div></div>
+  <div class="step"><div class="num">4</div><div>
+    <h3>悶蒸：30g 水，等 30 秒</h3>
+    <p>從中心往外繞圈，倒到所有粉都濕就停。粉會膨起來冒泡——新鮮的豆子才會這樣。</p>
+    <div class="frame"><svg viewBox="0 0 640 170">
+      <use href="#dripper" x="60" y="40" width="140" height="112"/>
+      <path d="M86 52 Q130 22 174 52" fill="#fff" stroke="#111" stroke-width="2.4"/>
+      <g fill="#fff" stroke="#111" stroke-width="2"><circle cx="112" cy="44" r="4"/><circle cx="130" cy="38" r="5"/><circle cx="150" cy="44" r="3.5"/><circle cx="122" cy="30" r="3"/></g>
+      <path d="M220 96 H280" class="stroke" marker-end="url(#arr)"/>
+      <use href="#timer" x="300" y="34" width="96" height="106"/>
+      <text x="420" y="84" font-size="30" font-weight="900" class="mono">0:30</text>
+      <text x="420" y="116" font-size="14" font-weight="700">秤上 30g</text>
+    </svg></div>
+  </div></div>
+  <span class="pno">6</span>
+</section>
+
+<!-- ============ 步驟 5 時間軸 ============ -->
+<section class="page">
+  <div class="step"><div class="num">5</div><div>
+    <h3>分兩段注水，2:30 結束</h3>
+    <p>細細的水柱、繞圈、別沖到濾紙邊。照這張圖走，秤上的數字對到就好。</p>
+  </div></div>
+  <div class="frame wide">
+    <svg viewBox="0 0 720 340" aria-label="注水時間軸">
+      <path d="M70 290 H690" stroke="#111" stroke-width="2.4"/>
+      <path d="M70 290 V30" stroke="#111" stroke-width="2.4"/>
+      <g font-size="12" fill="#555" text-anchor="middle">
+        <text x="70" y="312">0:00</text><text x="190" y="312">0:30</text><text x="310" y="312">1:00</text><text x="430" y="312">1:30</text><text x="550" y="312">2:00</text><text x="670" y="312">2:30</text>
+      </g>
+      <g font-size="12" fill="#555" text-anchor="end">
+        <text x="60" y="279">30g</text><text x="60" y="191">150g</text><text x="60" y="85">250g</text>
+      </g>
+      <g stroke="#ccc" stroke-width="1" stroke-dasharray="3 5"><path d="M70 275 H690 M70 187 H690 M70 81 H690"/></g>
+      <path d="M70 290 L100 275 L190 275 L250 187 L310 187 L390 81 L670 81" fill="none" stroke="#111" stroke-width="3.4" stroke-linejoin="round"/>
+      <g font-size="13" font-weight="700">
+        <text x="96" y="262">① 悶蒸</text>
+        <text x="200" y="176">② 注到 150g</text>
+        <text x="320" y="70">③ 注到 250g</text>
+        <text x="470" y="120">④ 等它滴完</text>
+      </g>
+      <g font-size="12" fill="#555">
+        <text x="470" y="140">水面降到粉床，</text>
+        <text x="470" y="158">2:30 左右滴完</text>
+      </g>
+      <use href="#kettle" x="210" y="214" width="70" height="52"/>
+      <use href="#dripper" x="560" y="190" width="80" height="64"/>
+    </svg>
+  </div>
+  <div class="note"><span class="bang">!</span><div>滴完比 2:30 早很多（例如 1:45）→ 下次磨細一點；晚很多（3:30 還在滴）→ 磨粗一點。只動研磨，其他不變。</div></div>
+  <span class="pno">7</span>
+</section>
+
+<!-- ============ ✓✕ + 決策樹 ============ -->
+<section class="page">
+  <h2>水溫：別用剛滾的水</h2>
+  <p class="sub">差 8 度，苦味差很多。</p>
+  <div class="duo">
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 280 150"><use href="#thermo" x="70" y="20" width="40" height="110"/><text x="130" y="84" font-size="34" font-weight="900">100°</text></svg>
+      <h4>剛煮滾就沖</h4><p>萃出太多苦澀，淺焙豆的果香也被燙掉。</p></div>
+    <div class="panel"><span class="mark">✓</span>
+      <svg viewBox="0 0 280 150"><use href="#thermo" x="70" y="34" width="34" height="94"/><text x="130" y="84" font-size="34" font-weight="900">92°</text></svg>
+      <h4>滾後開蓋等 1 分鐘</h4><p>淺焙 92–94°C、深焙 86–88°C。</p></div>
+  </div>
+  <h2 style="margin-top:36px">不好喝？照這張改</h2>
+  <p class="sub">一次只改一個變數，下一杯就知道答案。</p>
+  <div class="frame wide">
+    <svg viewBox="0 0 720 300" aria-label="風味調整決策樹">
+      <use href="#mug" x="330" y="6" width="60" height="54"/>
+      <path d="M360 64 V84" class="stroke" marker-end="url(#arr)"/>
+      <rect x="230" y="90" width="260" height="50" rx="25" fill="#fff" stroke="#111" stroke-width="2.4"/>
+      <text x="360" y="121" font-size="15" font-weight="700" text-anchor="middle">喝起來哪裡不對？</text>
+      <path d="M260 140 L130 186" class="stroke" marker-end="url(#arr)"/>
+      <path d="M360 140 V186" class="stroke" marker-end="url(#arr)"/>
+      <path d="M460 140 L590 186" class="stroke" marker-end="url(#arr)"/>
+      <g font-size="13" font-weight="900"><text x="170" y="156">太酸</text><text x="370" y="168">太苦</text><text x="520" y="156">太淡</text></g>
+      <g>
+        <rect x="20" y="192" width="220" height="90" rx="4" fill="#fff" stroke="#111" stroke-width="3.4"/>
+        <text x="36" y="222" font-size="15" font-weight="900">A　磨細一點</text>
+        <text x="36" y="248" font-size="12.5">萃取不足</text>
+        <text x="36" y="268" font-size="12.5">或水溫拉高 2°C</text>
+        <rect x="250" y="192" width="220" height="90" rx="4" fill="#fff" stroke="#111" stroke-width="3.4"/>
+        <text x="266" y="222" font-size="15" font-weight="900">B　磨粗一點</text>
+        <text x="266" y="248" font-size="12.5">萃取過度</text>
+        <text x="266" y="268" font-size="12.5">或水溫降 2°C</text>
+        <rect x="480" y="192" width="220" height="90" rx="4" fill="#fff" stroke="#111" stroke-width="3.4"/>
+        <text x="496" y="222" font-size="15" font-weight="900">C　粉加 1g</text>
+        <text x="496" y="248" font-size="12.5">水量不變</text>
+        <text x="496" y="268" font-size="12.5">比例往 1:15 靠</text>
+      </g>
+    </svg>
+  </div>
+  <span class="pno">8</span>
+</section>
+
+<!-- ============ 絕對不要 ============ -->
+<section class="page">
+  <h2>絕對不要</h2>
+  <p class="sub">四個讓好豆子變難喝的動作。</p>
+  <div class="quad">
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 260 110"><use href="#grinder" x="30" y="8" width="60" height="90"/><text x="110" y="52" font-size="14" font-weight="700">週一磨好</text><text x="110" y="76" font-size="14" font-weight="700">喝一週</text></svg>
+      <h4>一次磨一整包</h4><p>磨完 15 分鐘香氣就散一大半。要喝才磨。</p></div>
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 260 110"><use href="#dripper" x="40" y="20" width="100" height="80"/><path d="M50 26 L60 70 M130 26 L120 70" stroke="#111" stroke-width="4" stroke-linecap="round"/><text x="160" y="64" font-size="13" font-weight="700">沖濾紙邊</text></svg>
+      <h4>水沖到濾紙邊</h4><p>水直接從旁邊流走，沒經過咖啡粉，味道變淡。</p></div>
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 260 110"><use href="#mug" x="40" y="24" width="80" height="72"/><text x="140" y="56" font-size="13" font-weight="700">冰箱放了</text><text x="140" y="78" font-size="13" font-weight="700">一個月</text></svg>
+      <h4>豆子放冰箱</h4><p>一進一出會結露、吸冰箱味。密封罐、陰涼處、兩週內喝完。</p></div>
+    <div class="panel no"><span class="mark">✕</span>
+      <svg viewBox="0 0 260 110"><svg x="100" y="4" width="56" height="104" viewBox="0 0 60 120"><use href="#man"/><path d="M25 23 Q30 19 35 23" class="stroke"/></svg><g font-size="12" font-weight="700"><text x="10" y="34">磨細</text><text x="10" y="58">加溫</text><text x="10" y="82">換豆</text><text x="172" y="34">加粉</text><text x="172" y="58">換濾杯</text><text x="172" y="82">改時間…</text></g></svg>
+      <h4>一次改五個地方</h4><p>變好喝了也不知道是哪一個。一杯只改一件事。</p></div>
+  </div>
+  <span class="pno">9</span>
+</section>
+
+<!-- ============ 保養 ============ -->
+<section class="page">
+  <h2>保養</h2>
+  <p class="sub">器具乾淨，咖啡才不會有「昨天的味道」。</p>
+  <ul class="check">
+    <li><span class="box"></span><div>濾杯、分享壺用熱水沖乾淨，倒放晾乾 <span class="freq">每次</span></div></li>
+    <li><span class="box"></span><div>磨豆機刷掉卡在裡面的舊粉 <span class="freq">每週</span></div></li>
+    <li><span class="box"></span><div>豆子開封日寫在袋子上，超過兩週就換新的 <span class="freq">每包</span></div></li>
+    <li><span class="box"></span><div>手沖壺用檸檬酸煮一次，去除水垢 <span class="freq">每月</span></div></li>
+    <li><span class="box"></span><div>電子秤換電池（沒電時數字會亂跳） <span class="freq">看情況</span></div></li>
+  </ul>
+  <span class="pno">10</span>
+</section>
+
+<!-- ============ 配方卡 ============ -->
+<section class="page">
+  <h2>配方卡：抄起來貼冰箱</h2>
+  <p class="sub">換豆子時從這裡挑一張開始，再用第 8 頁微調。</p>
+  <div class="cards">
+    <div class="card"><span class="tag">A</span><div><div class="t">淺焙（果香、酸亮）</div><div class="q">15g 粉／250g 水／92°C／砂糖粗細／悶蒸 30g 等 30 秒／2:30 滴完</div></div><button class="copy">複製</button></div>
+    <div class="card"><span class="tag">B</span><div><div class="t">深焙（可可、厚實）</div><div class="q">16g 粉／240g 水／87°C／比砂糖粗一點／悶蒸 32g 等 30 秒／2:15 滴完</div></div><button class="copy">複製</button></div>
+    <div class="card"><span class="tag">C</span><div><div class="t">冰手沖（夏天）</div><div class="q">18g 粉／杯底放 100g 冰塊／熱水只注 150g、93°C／比砂糖細一點／滴完搖勻</div></div><button class="copy">複製</button></div>
+  </div>
+  <span class="pno">11</span>
+</section>
+
+<!-- ============ 封底 ============ -->
+<section class="page" style="text-align:center;padding-top:64px">
+  <svg viewBox="0 0 400 220" width="400" style="margin:0 auto" aria-hidden="true">
+    <svg x="110" y="40" width="80" height="160" viewBox="0 0 60 120"><use href="#man"/><path d="M25 23 Q30 19 35 23" class="stroke"/></svg>
+    <text x="196" y="66" font-size="34" font-weight="900">?</text>
+    <path d="M200 140 H240" class="stroke" marker-end="url(#arr)"/>
+    <use href="#mug" x="250" y="120" width="80" height="72"/>
+    <path d="M60 200 H340" class="stroke"/>
+  </svg>
+  <h2 style="margin-top:18px">還是不好喝？</h2>
+  <p style="max-width:520px;margin:10px auto 0;font-size:15px">別亂猜。每一杯都記這四格，下次只改一格：</p>
+  <div class="frame" style="max-width:520px;margin:18px auto 0;text-align:left">
+    <p class="mono" style="font-size:14px">豆子：___　烘焙日：___<br>粉 ___ g／水 ___ g／___ °C<br>研磨：___　滴完時間：___<br>喝起來：太酸／太苦／太淡／剛好</p>
+  </div>
+  <p class="cap" style="margin-top:28px">KAFFEKOPP・手沖咖啡組裝說明・AA-0002</p>
+  <span class="pno">12</span>
+</section>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    var label = btn.textContent;
+    btn.addEventListener('click', function(){
+      var text = btn.parentElement.querySelector('.q').textContent;
+      function ok(){ btn.textContent='已複製'; btn.classList.add('done'); setTimeout(function(){btn.textContent=label;btn.classList.remove('done');},1400); }
+      try{ navigator.clipboard.writeText(text).then(ok, function(){ fallback(text); ok(); }); }
+      catch(e){ fallback(text); ok(); }
+    });
+  });
+  function fallback(text){
+    var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    ta.remove();
+  }
+</script>
+</body>
+</html>
